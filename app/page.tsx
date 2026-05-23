@@ -47,12 +47,12 @@ export default function Home() {
     <div className="min-h-screen flex flex-col md:flex-row transition-all duration-300">
       {/* Sidebar */}
       <aside className={cn(
-        "fixed inset-y-0 left-0 z-40 bg-[var(--sidebar-bg)] border-r border-[var(--border-color)] shadow-xl md:shadow-none transform transition-all duration-300 ease-in-out md:relative md:translate-x-0",
+        "fixed inset-y-0 left-0 z-40 bg-[var(--sidebar-bg)] border-r border-[var(--border-color)] shadow-xl md:shadow-none transform transition-all duration-300 ease-in-out md:sticky md:top-0 md:h-screen md:translate-x-0",
         isSidebarOpen ? "translate-x-0" : "-translate-x-full",
-        isCollapsed ? "w-20" : "w-64"
+        isCollapsed ? "w-18" : "w-64"
       )}>
-        <div className={cn("h-full flex flex-col transition-all duration-300", isCollapsed ? "p-4" : "p-5")}>
-          <div className={cn("flex items-center gap-3 mb-8 overflow-hidden whitespace-nowrap", isCollapsed ? "justify-center" : "")}>
+        <div className={cn("h-full flex flex-col transition-all duration-300", isCollapsed ? "p-3" : "p-5")}>
+          <div className={cn("flex items-center gap-3 mb-8 overflow-hidden whitespace-nowrap", isCollapsed ? "justify-center mt-2" : "")}>
             <div className="flex-shrink-0 w-10 h-10 bg-gradient-to-br from-orange-400 via-orange-500 to-orange-600 rounded-xl flex items-center justify-center shadow-lg shadow-orange-500/20 dark:shadow-none ring-4 ring-orange-500/10">
               <BookOpen className="text-white" size={22} />
             </div>
@@ -61,13 +61,13 @@ export default function Home() {
                 <h1 className="text-lg font-black text-[var(--foreground)] tracking-tight">SkBee Docs</h1>
                 <div className="flex items-center gap-2">
                   {docs && <p className="text-[10px] font-black text-orange-500 uppercase tracking-tighter bg-orange-500/10 px-1.5 rounded">v{docs.metadata.version}</p>}
-                  <span className="text-[8px] text-[var(--text-muted)] font-medium opacity-60">Build: 2026-05-22-21-27</span>
+                  <span className="text-[8px] text-[var(--text-muted)] font-medium opacity-60">Build: 2026-05-22-22-06</span>
                 </div>
               </div>
             )}
           </div>
 
-          <nav className="flex-1 space-y-1 overflow-y-auto pr-2 custom-scrollbar">
+          <nav className="flex-1 space-y-1 overflow-y-auto pr-1 scrollbar-hide">
             {!isCollapsed && (
               <p className="text-[9px] font-black text-[var(--text-muted)] uppercase tracking-[0.2em] mb-3 px-4 opacity-50">Categories</p>
             )}
@@ -82,7 +82,7 @@ export default function Home() {
                   }
                 }}
                 className={cn(
-                  "w-full flex items-center px-4 py-3 rounded-xl text-xs font-bold transition-all duration-200 group cursor-pointer relative overflow-hidden",
+                  "w-full flex items-center px-4 py-2.5 rounded-xl text-[12px] font-bold transition-all duration-200 group cursor-pointer relative overflow-hidden",
                   isCollapsed ? "justify-center px-0" : "justify-between",
                   activeCategory === cat
                     ? "bg-orange-500 text-white shadow-lg shadow-orange-500/25 ring-1 ring-orange-400/50"
@@ -92,13 +92,13 @@ export default function Home() {
               >
                 <div className="flex items-center gap-3 overflow-hidden z-10">
                   {isCollapsed ? (
-                    <span className="capitalize text-lg font-black">{cat.charAt(0)}</span>
+                    <span className="capitalize text-sm font-black">{cat.charAt(0)}</span>
                   ) : (
                     <span className="capitalize truncate">{cat}</span>
                   )}
                 </div>
                 {!isCollapsed && (
-                  <ChevronRight size={16} className={cn(
+                  <ChevronRight size={15} className={cn(
                     "flex-shrink-0 transition-all duration-300 z-10",
                     activeCategory === cat ? "translate-x-0 opacity-100" : "-translate-x-2 opacity-0 group-hover:translate-x-0 group-hover:opacity-100"
                   )} />
@@ -118,26 +118,26 @@ export default function Home() {
               <button
                 onClick={toggleTheme}
                 className={cn(
-                  "w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-xs font-bold text-[var(--text-muted)] hover:bg-orange-500/5 hover:text-orange-600 dark:hover:text-orange-400 transition-all cursor-pointer",
+                  "w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-[12px] font-bold text-[var(--text-muted)] hover:bg-orange-500/5 hover:text-orange-600 dark:hover:text-orange-400 transition-all cursor-pointer",
                   isCollapsed ? "justify-center px-0" : ""
                 )}
                 title={isCollapsed ? (theme === "light" ? "Light Mode" : "Dark Mode") : ""}
               >
               <div className="w-7 h-7 rounded-lg bg-orange-500/5 flex items-center justify-center">
-                {theme === "light" ? <Sun size={16} /> : <Moon size={16} />}
+                {theme === "light" ? <Sun size={15} /> : <Moon size={15} />}
               </div>
               {!isCollapsed && (theme === "light" ? "Light Mode" : "Dark Mode")}
             </button>
             <button
               onClick={() => setIsAdminOpen(true)}
               className={cn(
-                "w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-xs font-bold text-[var(--text-muted)] hover:bg-orange-500/5 hover:text-orange-600 dark:hover:text-orange-400 transition-all cursor-pointer",
+                "w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-[12px] font-bold text-[var(--text-muted)] hover:bg-orange-500/5 hover:text-orange-600 dark:hover:text-orange-400 transition-all cursor-pointer",
                 isCollapsed ? "justify-center px-0" : ""
               )}
               title={isCollapsed ? "Admin Settings" : ""}
             >
               <div className="w-7 h-7 rounded-lg bg-orange-500/5 flex items-center justify-center">
-                <Settings size={16} />
+                <Settings size={15} />
               </div>
               {!isCollapsed && "Admin Settings"}
             </button>
@@ -146,13 +146,13 @@ export default function Home() {
             <button
               onClick={() => setIsCollapsed(!isCollapsed)}
               className={cn(
-                "hidden md:flex w-full items-center gap-3 px-4 py-2.5 rounded-xl text-xs font-bold text-[var(--text-muted)] hover:bg-orange-500/5 hover:text-orange-600 dark:hover:text-orange-400 transition-all cursor-pointer mt-1",
+                "hidden md:flex w-full items-center gap-3 px-4 py-2.5 rounded-xl text-[12px] font-bold text-[var(--text-muted)] hover:bg-orange-500/5 hover:text-orange-600 dark:hover:text-orange-400 transition-all cursor-pointer mt-1",
                 isCollapsed ? "justify-center px-0" : ""
               )}
               title={isCollapsed ? "Expand Sidebar" : "Collapse Sidebar"}
             >
               <div className="w-7 h-7 rounded-lg bg-orange-500/5 flex items-center justify-center">
-                {isCollapsed ? <PanelLeftOpen size={16} /> : <PanelLeftClose size={16} />}
+                {isCollapsed ? <PanelLeftOpen size={15} /> : <PanelLeftClose size={15} />}
               </div>
               {!isCollapsed && "Collapse Sidebar"}
             </button>
