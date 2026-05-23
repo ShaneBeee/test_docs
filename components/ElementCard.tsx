@@ -96,29 +96,32 @@ function SkriptHighlighter({ code }: { code: string }) {
 
 export default function ElementCard({ element, category }: ElementCardProps) {
   return (
-    <div className="bg-[var(--card-bg)] rounded-xl shadow-sm border border-orange-100 dark:border-slate-700 overflow-hidden hover:shadow-md transition-shadow">
-      <div className="p-5">
-        <div className="flex items-start justify-between gap-4 mb-3">
-          <h3 className="text-xl font-bold text-[var(--foreground)] group-hover:text-orange-600 transition-colors">
+    <div className="bg-[var(--card-bg)] rounded-[32px] shadow-sm border border-[var(--border-color)] overflow-hidden hover:shadow-2xl hover:shadow-orange-500/10 transition-all duration-300 group hover:-translate-y-1">
+      <div className="p-8">
+        <div className="flex items-start justify-between gap-4 mb-6">
+          <h3 className="text-2xl font-black text-[var(--foreground)] group-hover:text-orange-600 transition-colors tracking-tight leading-none">
             {element.name}
           </h3>
           {element.since && element.since.length > 0 && (
-            <div className="flex items-center gap-1.5 px-2 py-1 bg-orange-50 dark:bg-orange-900/20 text-orange-600 dark:text-orange-400 rounded-md text-sm font-medium border border-orange-100 dark:border-orange-900/40 shrink-0">
-              <Clock size={14} />
+            <div className="flex items-center gap-1.5 px-3 py-1.5 bg-orange-500/10 text-orange-600 dark:text-orange-400 rounded-xl text-xs font-black border border-orange-500/20 shrink-0 uppercase tracking-widest shadow-sm">
+              <Clock size={12} strokeWidth={3} />
               {element.since[0]}
             </div>
           )}
         </div>
 
-        <div className="space-y-4">
+        <div className="space-y-8">
           {/* Pattern */}
           {element.patterns && element.patterns.length > 0 && (
             <div>
-              <span className="text-xs font-bold uppercase tracking-wider text-[var(--text-muted)] flex items-center gap-1.5 mb-2">
-                <Terminal size={14} className="text-orange-500" />
+              <span className="text-[10px] font-black uppercase tracking-[0.2em] text-[var(--text-muted)] flex items-center gap-2 mb-3 opacity-50">
+                <div className="w-5 h-5 bg-orange-500/10 rounded-lg flex items-center justify-center">
+                  <Terminal size={12} className="text-orange-500" />
+                </div>
                 Pattern
               </span>
-              <div className="bg-[#1e1e2e] p-4 rounded-xl border border-slate-800 font-mono text-sm shadow-inner overflow-x-auto">
+              <div className="bg-[#0f172a] p-6 rounded-[24px] border-2 border-slate-800/50 font-mono text-sm shadow-2xl relative overflow-hidden group/pattern">
+                <div className="absolute top-0 right-0 w-32 h-32 bg-orange-500/5 blur-3xl rounded-full -mr-16 -mt-16 pointer-events-none" />
                 {element.patterns.map((pattern, idx) => {
                   let displayPattern = pattern;
                   const hasEntries = (category === 'structures' || category === 'expressions' || category === 'sections') && element.entries && element.entries.length > 0;
@@ -128,12 +131,12 @@ export default function ElementCard({ element, category }: ElementCardProps) {
                   }
 
                   return (
-                    <div key={idx} className="mb-3 last:mb-0">
-                      <div className="text-orange-400 font-bold">{displayPattern}</div>
+                    <div key={idx} className="mb-4 last:mb-0 relative z-10">
+                      <div className="text-orange-400 font-bold leading-relaxed">{displayPattern}</div>
                       {hasEntries && element.entries?.map((entry, eIdx) => (
-                        <div key={eIdx} className="pl-6 mt-1 flex items-baseline gap-2">
-                          <span className="text-slate-300">{entry.name}:</span>
-                          <span className="text-green-400 italic text-xs"># {entry.isRequired ? 'Required' : 'Optional'} {entry.isSection ? 'code' : 'value'}</span>
+                        <div key={eIdx} className="pl-8 mt-2 flex items-baseline gap-3 border-l-2 border-slate-800/50 ml-1">
+                          <span className="text-slate-300 font-medium">{entry.name}:</span>
+                          <span className="text-green-400/80 italic text-[11px] font-medium tracking-tight"># {entry.isRequired ? 'Required' : 'Optional'} {entry.isSection ? 'code' : 'value'}</span>
                         </div>
                       ))}
                     </div>
@@ -146,21 +149,23 @@ export default function ElementCard({ element, category }: ElementCardProps) {
           {/* Description */}
           {element.description && element.description.length > 0 && (
             <div>
-               <span className="text-xs font-bold uppercase tracking-wider text-[var(--text-muted)] flex items-center gap-1.5 mb-2">
-                 <FileText size={14} className="text-blue-400" />
+               <span className="text-[10px] font-black uppercase tracking-[0.2em] text-[var(--text-muted)] flex items-center gap-2 mb-3 opacity-50">
+                 <div className="w-5 h-5 bg-blue-500/10 rounded-lg flex items-center justify-center">
+                   <FileText size={12} className="text-blue-500" />
+                 </div>
                  Description
                </span>
-               <div className="text-[var(--foreground)] text-sm leading-relaxed prose prose-sm max-w-none">
+               <div className="text-[var(--foreground)] text-base leading-relaxed prose prose-sm max-w-none font-medium">
                   <ReactMarkdown 
                     remarkPlugins={[remarkGfm]}
                     components={{
-                      p: ({node, ...props}) => <p className="mb-2 last:mb-0" {...props} />,
-                      ul: ({node, ...props}) => <ul className="list-disc ml-4 mb-2" {...props} />,
-                      ol: ({node, ...props}) => <ol className="list-decimal ml-4 mb-2" {...props} />,
-                      li: ({node, ...props}) => <li className="mb-1" {...props} />,
-                      code: ({node, ...props}) => <code className="bg-gray-100 dark:bg-slate-700 px-1 rounded text-orange-600 dark:text-orange-400 font-mono text-xs" {...props} />,
-                      strong: ({node, ...props}) => <strong className="font-extrabold text-[var(--foreground)]" {...props} />,
-                      a: ({node, ...props}) => <a className="text-orange-600 dark:text-orange-400 hover:text-orange-700 dark:hover:text-orange-300 font-bold underline decoration-orange-200 dark:decoration-orange-900/40 underline-offset-2 transition-colors" {...props} />,
+                      p: ({node, ...props}) => <p className="mb-4 last:mb-0" {...props} />,
+                      ul: ({node, ...props}) => <ul className="list-disc ml-6 mb-4 space-y-1" {...props} />,
+                      ol: ({node, ...props}) => <ol className="list-decimal ml-6 mb-4 space-y-1" {...props} />,
+                      li: ({node, ...props}) => <li className="pl-1" {...props} />,
+                      code: ({node, ...props}) => <code className="bg-orange-500/5 dark:bg-orange-500/10 px-2 py-0.5 rounded-md text-orange-600 dark:text-orange-400 font-black font-mono text-xs border border-orange-500/10" {...props} />,
+                      strong: ({node, ...props}) => <strong className="font-black text-[var(--foreground)]" {...props} />,
+                      a: ({node, ...props}) => <a className="text-orange-600 dark:text-orange-400 hover:text-orange-700 dark:hover:text-orange-300 font-black underline decoration-orange-500/30 underline-offset-4 transition-all" {...props} />,
                     }}
                   >
                     {element.description.join('\n\n')}
@@ -171,14 +176,16 @@ export default function ElementCard({ element, category }: ElementCardProps) {
 
           {/* Event Values */}
           {element["event values"] && element["event values"].length > 0 && (
-            <div>
-              <span className="text-xs font-bold uppercase tracking-wider text-[var(--text-muted)] flex items-center gap-1.5 mb-2">
-                <BadgeCheck size={14} className="text-blue-500" />
+            <div className="pt-2">
+              <span className="text-[10px] font-black uppercase tracking-[0.2em] text-[var(--text-muted)] flex items-center gap-2 mb-3 opacity-50">
+                <div className="w-5 h-5 bg-blue-500/10 rounded-lg flex items-center justify-center">
+                  <BadgeCheck size={12} className="text-blue-500" />
+                </div>
                 Event Values
               </span>
               <div className="flex flex-wrap gap-2">
                 {element["event values"].map((val, i) => (
-                  <span key={i} className="px-2 py-1 bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 rounded text-xs font-mono border border-blue-100 dark:border-blue-900/40">
+                  <span key={i} className="px-3 py-1.5 bg-blue-500/5 dark:bg-blue-500/10 text-blue-600 dark:text-blue-400 rounded-xl text-xs font-black border border-blue-500/10 hover:bg-blue-500/10 transition-colors">
                     {val}
                   </span>
                 ))}
@@ -189,9 +196,9 @@ export default function ElementCard({ element, category }: ElementCardProps) {
 
           {/* Usage/Values for Types */}
           {element.usage && (
-            <div>
-              <span className="text-xs font-bold uppercase tracking-wider text-[var(--text-muted)] block mb-1">Values</span>
-              <div className="text-[var(--foreground)] text-xs bg-[var(--background)] p-2 rounded border border-[var(--border-color)] italic">
+            <div className="pt-2">
+              <span className="text-[10px] font-black uppercase tracking-[0.2em] text-[var(--text-muted)] block mb-3 opacity-50">Values</span>
+              <div className="text-[var(--foreground)] text-xs bg-orange-500/5 p-4 rounded-2xl border-2 border-dashed border-orange-500/10 font-bold italic tracking-tight">
                 {element.usage}
               </div>
             </div>
@@ -199,9 +206,11 @@ export default function ElementCard({ element, category }: ElementCardProps) {
 
           {/* Examples */}
           {element.examples && element.examples.length > 0 && (
-            <div>
-              <span className="text-xs font-bold uppercase tracking-wider text-[var(--text-muted)] flex items-center gap-1.5 mb-2">
-                <ListTodo size={14} className="text-green-500" />
+            <div className="pt-2">
+              <span className="text-[10px] font-black uppercase tracking-[0.2em] text-[var(--text-muted)] flex items-center gap-2 mb-3 opacity-50">
+                <div className="w-5 h-5 bg-green-500/10 rounded-lg flex items-center justify-center">
+                  <ListTodo size={12} className="text-green-500" />
+                </div>
                 Examples
               </span>
               <SkriptHighlighter code={element.examples.join('\n')} />

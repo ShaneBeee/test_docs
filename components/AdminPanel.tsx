@@ -5,6 +5,7 @@ import { saveDocs } from "@/lib/store";
 import { SkDocs } from "@/lib/types";
 import { Upload, LogIn, X, CheckCircle2, AlertCircle, Search, Edit2, Save, ArrowLeft } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { motion } from "framer-motion";
 
 export default function AdminPanel({ onClose, onUploadSuccess }: { onClose: () => void, onUploadSuccess: () => void }) {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -134,62 +135,62 @@ export default function AdminPanel({ onClose, onUploadSuccess }: { onClose: () =
   : [];
 
   return (
-    <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+    <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-md flex items-center justify-center z-50 p-4 animate-in fade-in duration-300">
       <div className={cn(
-        "bg-[var(--card-bg)] rounded-2xl shadow-2xl w-full overflow-hidden relative transition-all duration-300",
-        isLoggedIn ? "max-w-4xl h-[80vh]" : "max-w-md"
+        "bg-[var(--card-bg)] rounded-[32px] shadow-2xl w-full overflow-hidden relative transition-all duration-500 border border-[var(--border-color)]",
+        isLoggedIn ? "max-w-5xl h-[85vh]" : "max-w-md"
       )}>
         <button 
           onClick={onClose}
-          className="absolute top-4 right-4 text-gray-400 dark:text-slate-500 hover:text-gray-600 dark:hover:text-slate-300 transition-colors z-10"
+          className="absolute top-6 right-6 text-gray-400 dark:text-slate-500 hover:text-orange-600 dark:hover:text-orange-400 p-2 hover:bg-orange-500/10 rounded-xl transition-all z-10 cursor-pointer"
         >
-          <X size={20} />
+          <X size={24} />
         </button>
 
         <div className="h-full flex flex-col">
           {!isLoggedIn ? (
-            <div className="p-8">
-              <div className="space-y-6">
+            <div className="p-10">
+              <div className="space-y-8">
                 <div className="text-center">
-                  <div className="w-16 h-16 bg-orange-100 dark:bg-orange-900/20 rounded-2xl flex items-center justify-center mx-auto mb-4">
-                    <LogIn className="text-orange-600 dark:text-orange-400" size={32} />
+                  <div className="w-20 h-20 bg-gradient-to-br from-orange-400 to-orange-600 rounded-[28px] flex items-center justify-center mx-auto mb-6 shadow-xl shadow-orange-500/20 ring-4 ring-orange-500/10">
+                    <LogIn className="text-white" size={36} />
                   </div>
-                  <h2 className="text-2xl font-bold text-[var(--foreground)]">Admin Login</h2>
-                  <p className="text-[var(--text-muted)] text-sm">Sign in to manage documentation</p>
+                  <h2 className="text-3xl font-black text-[var(--foreground)] tracking-tight">Admin Portal</h2>
+                  <p className="text-[var(--text-muted)] font-bold text-sm mt-2 opacity-60 uppercase tracking-widest">Manage your documentation</p>
                 </div>
 
-                <form onSubmit={handleLogin} className="space-y-4">
-                  <div>
-                    <label className="block text-sm font-medium text-[var(--foreground)] opacity-70 mb-1">Username</label>
+                <form onSubmit={handleLogin} className="space-y-5">
+                  <div className="space-y-2">
+                    <label className="text-xs font-black text-[var(--text-muted)] uppercase tracking-[0.2em] ml-1 opacity-50">Username</label>
                     <input
                       type="text"
                       value={username}
                       onChange={(e) => setUsername(e.target.value)}
-                      className="w-full px-4 py-2 rounded-lg border border-[var(--border-color)] bg-[var(--background)] text-[var(--foreground)] focus:ring-2 focus:ring-orange-500 focus:border-orange-500 outline-none transition-all"
+                      className="w-full px-5 py-3.5 rounded-[18px] border-2 border-[var(--border-color)] bg-[var(--background)] text-[var(--foreground)] focus:ring-8 focus:ring-orange-500/10 focus:border-orange-500 outline-none transition-all font-bold placeholder:opacity-30"
                       placeholder="admin"
                     />
                   </div>
-                  <div>
-                    <label className="block text-sm font-medium text-[var(--foreground)] opacity-70 mb-1">Password</label>
+                  <div className="space-y-2">
+                    <label className="text-xs font-black text-[var(--text-muted)] uppercase tracking-[0.2em] ml-1 opacity-50">Password</label>
                     <input
                       type="password"
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
-                      className="w-full px-4 py-2 rounded-lg border border-[var(--border-color)] bg-[var(--background)] text-[var(--foreground)] focus:ring-2 focus:ring-orange-500 focus:border-orange-500 outline-none transition-all"
+                      className="w-full px-5 py-3.5 rounded-[18px] border-2 border-[var(--border-color)] bg-[var(--background)] text-[var(--foreground)] focus:ring-8 focus:ring-orange-500/10 focus:border-orange-500 outline-none transition-all font-bold placeholder:opacity-30"
                       placeholder="••••••••"
                     />
                   </div>
                   {error && (
-                    <div className="flex items-center gap-2 text-red-600 dark:text-red-400 text-sm bg-red-50 dark:bg-red-900/20 p-3 rounded-lg border border-red-100 dark:border-red-900/40">
-                      <AlertCircle size={16} />
+                    <div className="flex items-center gap-3 text-red-600 dark:text-red-400 text-sm bg-red-500/10 p-4 rounded-xl border border-red-500/20 font-bold animate-in shake-in duration-300">
+                      <AlertCircle size={18} />
                       {error}
                     </div>
                   )}
                   <button
                     type="submit"
-                    className="w-full bg-orange-600 hover:bg-orange-700 text-white font-bold py-3 rounded-xl shadow-lg shadow-orange-200 dark:shadow-none transition-all active:scale-[0.98] cursor-pointer"
+                    className="w-full bg-orange-500 hover:bg-orange-600 text-white font-black py-4 rounded-[20px] shadow-xl shadow-orange-500/20 transition-all active:scale-[0.98] cursor-pointer mt-2 text-lg tracking-tight"
                   >
-                    Login
+                    Authenticate
                   </button>
                 </form>
               </div>
@@ -197,217 +198,230 @@ export default function AdminPanel({ onClose, onUploadSuccess }: { onClose: () =
           ) : (
             <>
               {/* Header with Tabs */}
-              <div className="px-8 pt-6 border-b border-[var(--border-color)]">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-8">
-                    <button 
-                      onClick={() => setView("upload")}
-                      className={cn(
-                        "pb-4 px-4 text-sm font-bold transition-all border-b-2 cursor-pointer",
-                        view === "upload" ? "text-orange-600 border-orange-600" : "text-[var(--text-muted)] border-transparent hover:text-orange-600 hover:bg-orange-50/30 rounded-t-lg transition-all"
-                      )}
-                    >
-                      Upload JSON
-                    </button>
-                    <button 
-                      onClick={() => setView("manage")}
-                      className={cn(
-                        "pb-4 px-4 text-sm font-bold transition-all border-b-2 cursor-pointer",
-                        view === "manage" ? "text-orange-600 border-orange-600" : "text-[var(--text-muted)] border-transparent hover:text-orange-600 hover:bg-orange-50/30 rounded-t-lg transition-all"
-                      )}
-                    >
-                      Manage Elements
-                    </button>
-                  </div>
-                  {docs && <p className="text-xs text-[var(--text-muted)] pb-4 pr-6">Current version: v{docs.metadata.version}</p>}
+              <div className="px-10 pt-8 border-b border-[var(--border-color)] bg-[var(--sidebar-bg)]">
+                <div className="flex items-center justify-between mb-2">
+                   <h2 className="text-2xl font-black text-[var(--foreground)] tracking-tight">Admin Control</h2>
+                   {docs && (
+                     <div className="px-3 py-1 bg-orange-500/10 text-orange-600 dark:text-orange-400 rounded-lg text-[10px] font-black uppercase tracking-widest border border-orange-500/20 mr-8">
+                       v{docs.metadata.version}
+                     </div>
+                   )}
+                </div>
+                <div className="flex items-center gap-8 mt-4">
+                  <button 
+                    onClick={() => setView("upload")}
+                    className={cn(
+                      "pb-4 px-2 text-sm font-black transition-all border-b-4 cursor-pointer tracking-tight",
+                      view === "upload" ? "text-orange-600 border-orange-500" : "text-[var(--text-muted)] border-transparent hover:text-orange-600 opacity-60 hover:opacity-100"
+                    )}
+                  >
+                    Upload Documentation
+                  </button>
+                  <button 
+                    onClick={() => setView("manage")}
+                    className={cn(
+                      "pb-4 px-2 text-sm font-black transition-all border-b-4 cursor-pointer tracking-tight",
+                      view === "manage" ? "text-orange-600 border-orange-500" : "text-[var(--text-muted)] border-transparent hover:text-orange-600 opacity-60 hover:opacity-100"
+                    )}
+                  >
+                    Manage Database
+                  </button>
                 </div>
               </div>
 
-              <div className="flex-1 overflow-y-auto p-8">
+              <div className="flex-1 overflow-y-auto p-10 custom-scrollbar">
                 {editingElement ? (
-                  <div className="space-y-6 max-w-2xl mx-auto">
-                    <div className="flex items-center justify-between mb-4">
+                  <div className="space-y-8 max-w-3xl mx-auto">
+                    <div className="flex items-center justify-between">
                       <button 
                         onClick={() => setEditingElement(null)}
-                        className="flex items-center gap-2 text-[var(--text-muted)] hover:text-[var(--foreground)] font-medium transition-colors cursor-pointer"
+                        className="flex items-center gap-2 text-orange-600 font-black text-sm hover:translate-x-1 transition-transform cursor-pointer"
                       >
-                        <ArrowLeft size={18} />
-                        Back to List
+                        <ArrowLeft size={18} strokeWidth={3} />
+                        BACK TO LIST
                       </button>
-                      <h2 className="text-xl font-bold text-[var(--foreground)]">Edit Element</h2>
+                      <span className="text-[10px] font-black uppercase tracking-[0.2em] text-[var(--text-muted)] opacity-50">Editor Mode</span>
                     </div>
 
-                    <div className="grid grid-cols-1 gap-4">
-                      <div>
-                        <label className="block text-xs font-bold text-[var(--text-muted)] uppercase tracking-wider mb-2">Name</label>
+                    <div className="grid grid-cols-1 gap-8">
+                      <div className="space-y-3">
+                        <label className="text-[10px] font-black uppercase tracking-[0.2em] text-[var(--text-muted)] ml-1">Display Name</label>
                         <input 
                           type="text" 
                           value={editName}
                           onChange={(e) => setEditName(e.target.value)}
-                          className="w-full px-4 py-2 bg-[var(--background)] border border-[var(--border-color)] text-[var(--foreground)] rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 outline-none transition-all"
+                          className="w-full px-5 py-3.5 bg-[var(--background)] border-2 border-[var(--border-color)] text-[var(--foreground)] rounded-2xl focus:ring-8 focus:ring-orange-500/10 focus:border-orange-500 outline-none transition-all font-bold"
                         />
                       </div>
 
-                      <div>
-                        <label className="block text-xs font-bold text-[var(--text-muted)] uppercase tracking-wider mb-2">Since (Comma separated)</label>
+                      <div className="space-y-3">
+                        <label className="text-[10px] font-black uppercase tracking-[0.2em] text-[var(--text-muted)] ml-1">Introduction Version</label>
                         <input 
                           type="text" 
                           value={editSince}
                           onChange={(e) => setEditSince(e.target.value)}
-                          className="w-full px-4 py-2 bg-[var(--background)] border border-[var(--border-color)] text-[var(--foreground)] rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 outline-none transition-all"
-                          placeholder="1.0.0, 2.0.0"
+                          className="w-full px-5 py-3.5 bg-[var(--background)] border-2 border-[var(--border-color)] text-[var(--foreground)] rounded-2xl focus:ring-8 focus:ring-orange-500/10 focus:border-orange-500 outline-none transition-all font-bold"
+                          placeholder="e.g. 1.0.0"
                         />
                       </div>
 
-                      <div>
-                        <label className="block text-xs font-bold text-[var(--text-muted)] uppercase tracking-wider mb-2">Patterns (One per line)</label>
+                      <div className="space-y-3">
+                        <label className="text-[10px] font-black uppercase tracking-[0.2em] text-[var(--text-muted)] ml-1">Syntax Patterns</label>
                         <textarea 
                           value={editPatterns}
                           onChange={(e) => setEditPatterns(e.target.value)}
                           rows={3}
-                          className="w-full px-4 py-2 bg-[var(--background)] border border-[var(--border-color)] text-[var(--foreground)] rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 outline-none transition-all font-mono text-sm"
+                          className="w-full px-5 py-4 bg-[#0f172a] border-2 border-slate-800 text-orange-400 rounded-2xl focus:ring-8 focus:ring-orange-500/10 focus:border-orange-500 outline-none transition-all font-mono text-sm font-bold leading-relaxed"
                         />
                       </div>
 
-                      <div>
-                        <label className="block text-xs font-bold text-[var(--text-muted)] uppercase tracking-wider mb-2">Description (One per line for paragraphs)</label>
+                      <div className="space-y-3">
+                        <label className="text-[10px] font-black uppercase tracking-[0.2em] text-[var(--text-muted)] ml-1">Detailed Description</label>
                         <textarea 
                           value={editDescription}
                           onChange={(e) => setEditDescription(e.target.value)}
                           rows={4}
-                          className="w-full px-4 py-2 bg-[var(--background)] border border-[var(--border-color)] text-[var(--foreground)] rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 outline-none transition-all text-sm"
+                          className="w-full px-5 py-4 bg-[var(--background)] border-2 border-[var(--border-color)] text-[var(--foreground)] rounded-2xl focus:ring-8 focus:ring-orange-500/10 focus:border-orange-500 outline-none transition-all font-medium text-sm leading-relaxed"
                         />
                       </div>
 
-                      <div>
-                        <label className="block text-xs font-bold text-[var(--text-muted)] uppercase tracking-wider mb-2">Examples (One per line)</label>
+                      <div className="space-y-3">
+                        <label className="text-[10px] font-black uppercase tracking-[0.2em] text-[var(--text-muted)] ml-1">Code Snippets</label>
                         <textarea 
                           value={editExamples}
                           onChange={(e) => setEditExamples(e.target.value)}
                           rows={6}
-                          className="w-full px-4 py-2 bg-[var(--background)] border border-[var(--border-color)] text-[var(--foreground)] rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 outline-none transition-all font-mono text-sm"
+                          className="w-full px-5 py-4 bg-[#0f172a] border-2 border-slate-800 text-[#D4D4D4] rounded-2xl focus:ring-8 focus:ring-orange-500/10 focus:border-orange-500 outline-none transition-all font-mono text-sm leading-relaxed"
                         />
                       </div>
 
-                      <div className="pt-4">
+                      <div className="pt-4 pb-10">
                         <button 
                           onClick={handleSaveEdit}
-                          className="w-full bg-orange-600 hover:bg-orange-700 text-white font-bold py-3 rounded-xl shadow-lg shadow-orange-200 dark:shadow-none transition-all flex items-center justify-center gap-2 cursor-pointer"
+                          className="w-full bg-orange-500 hover:bg-orange-600 text-white font-black py-4 rounded-[24px] shadow-xl shadow-orange-500/20 transition-all flex items-center justify-center gap-3 cursor-pointer text-lg tracking-tight active:scale-95"
                         >
-                          <Save size={18} />
-                          Save Changes
+                          <Save size={20} strokeWidth={3} />
+                          Commit Changes
                         </button>
                       </div>
                     </div>
                   </div>
                 ) : view === "upload" ? (
-                  <div className="space-y-6 text-center max-w-md mx-auto py-10">
-                    <div className="w-16 h-16 bg-green-100 dark:bg-green-900/20 rounded-2xl flex items-center justify-center mx-auto mb-4">
-                      <Upload className="text-green-600 dark:text-green-400" size={32} />
+                  <div className="space-y-6 text-center max-w-lg mx-auto py-6">
+                    <div className="w-20 h-20 bg-gradient-to-br from-green-400 to-green-600 rounded-[28px] flex items-center justify-center mx-auto mb-4 shadow-xl shadow-green-500/20 ring-4 ring-green-500/10">
+                      <Upload className="text-white" size={32} />
                     </div>
                     <div>
-                      <h2 className="text-2xl font-bold text-[var(--foreground)]">Upload Documentation</h2>
-                      <p className="text-[var(--text-muted)] text-sm">Select your json-docs.json file</p>
+                      <h2 className="text-2xl font-black text-[var(--foreground)] tracking-tight">Sync Documentation</h2>
+                      <p className="text-[var(--text-muted)] font-bold text-xs mt-1 opacity-60 uppercase tracking-widest">Select your master JSON file</p>
                     </div>
 
-                    <div className="relative">
+                    <div className="relative group">
                       <input
                         type="file"
                         accept=".json"
                         onChange={handleFileUpload}
-                        className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                        className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
                       />
                       <div className={cn(
-                        "border-2 border-dashed rounded-2xl p-8 transition-all",
-                        success ? "border-green-500 bg-green-50 dark:bg-green-900/20" : "border-[var(--border-color)] hover:border-orange-400 dark:hover:border-orange-500 hover:bg-orange-50 dark:hover:bg-orange-900/10"
+                        "border-4 border-dashed rounded-[28px] p-8 transition-all duration-300 relative overflow-hidden",
+                        success 
+                          ? "border-green-500 bg-green-500/5 shadow-2xl shadow-green-500/10" 
+                          : "border-[var(--border-color)] group-hover:border-orange-500 group-hover:bg-orange-500/5 group-hover:shadow-2xl group-hover:shadow-orange-500/5"
                       )}>
                         {success ? (
-                          <div className="text-green-600 dark:text-green-400 space-y-2">
-                            <CheckCircle2 size={40} className="mx-auto" />
-                            <p className="font-bold">Successfully Updated!</p>
-                          </div>
+                          <motion.div 
+                            initial={{ scale: 0.8, opacity: 0 }}
+                            animate={{ scale: 1, opacity: 1 }}
+                            className="text-green-600 dark:text-green-400 space-y-3"
+                          >
+                            <CheckCircle2 size={40} className="mx-auto" strokeWidth={3} />
+                            <p className="font-black text-lg tracking-tight">Database Synchronized!</p>
+                          </motion.div>
                         ) : (
-                          <div className="text-[var(--text-muted)] space-y-2">
-                            <Upload size={40} className="mx-auto text-[var(--text-muted)] opacity-50" />
-                            <p className="font-medium">Click or drag and drop</p>
-                            <p className="text-xs">JSON files only</p>
+                          <div className="text-[var(--text-muted)] space-y-3">
+                            <Upload size={40} className="mx-auto opacity-20 group-hover:opacity-100 group-hover:text-orange-500 transition-all duration-300" strokeWidth={1.5} />
+                            <div>
+                               <p className="font-black text-lg tracking-tight text-[var(--foreground)]">Drop your JSON here</p>
+                               <p className="text-[10px] font-bold opacity-50 mt-1 uppercase tracking-widest">or click to browse filesystem</p>
+                            </div>
                           </div>
                         )}
                       </div>
                     </div>
 
                     {error && (
-                      <div className="flex items-center gap-2 text-red-600 dark:text-red-400 text-sm bg-red-50 dark:bg-red-900/20 p-3 rounded-lg border border-red-100 dark:border-red-900/40 text-left">
-                        <AlertCircle size={16} />
+                      <div className="flex items-center gap-3 text-red-600 dark:text-red-400 text-sm bg-red-500/10 p-5 rounded-2xl border border-red-500/20 text-left font-bold animate-in slide-in-from-bottom-2">
+                        <AlertCircle size={20} />
                         {error}
                       </div>
                     )}
                   </div>
                 ) : (
-                  <div className="space-y-6">
-                    <div className="flex flex-col md:flex-row gap-4">
-                      <div className="flex-1 relative">
-                        <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-[var(--text-muted)]" size={16} />
+                  <div className="space-y-8">
+                    <div className="flex flex-col md:flex-row gap-6">
+                      <div className="flex-1 relative group">
+                        <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-[var(--text-muted)] group-focus-within:text-orange-500 transition-colors" size={20} />
                         <input 
                           type="text" 
-                          placeholder="Search elements..."
+                          placeholder="Search database..."
                           value={manageSearch}
                           onChange={(e) => setManageSearch(e.target.value)}
-                          className="w-full pl-10 pr-4 py-2 bg-[var(--background)] border border-[var(--border-color)] text-[var(--foreground)] rounded-lg text-sm focus:ring-2 focus:ring-orange-500 focus:border-orange-500 outline-none transition-all"
+                          className="w-full pl-12 pr-6 py-4 bg-[var(--background)] border-2 border-[var(--border-color)] text-[var(--foreground)] rounded-2xl text-sm font-bold focus:ring-8 focus:ring-orange-500/10 focus:border-orange-500 outline-none transition-all placeholder:opacity-30"
                         />
                       </div>
                       <select 
                         value={activeManageCategory}
                         onChange={(e) => setActiveManageCategory(e.target.value as keyof SkDocs)}
-                        className="px-4 py-2 bg-[var(--background)] border border-[var(--border-color)] rounded-lg text-sm font-semibold text-[var(--foreground)] outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500 capitalize"
+                        className="px-6 py-4 bg-[var(--background)] border-2 border-[var(--border-color)] rounded-2xl text-sm font-black text-[var(--foreground)] outline-none focus:ring-8 focus:ring-orange-500/10 focus:border-orange-500 capitalize cursor-pointer transition-all"
                       >
                         {["types", "structures", "events", "sections", "effects", "expressions", "conditions", "functions"].map(cat => (
-                          <option key={cat} value={cat} className="bg-[var(--background)]">{cat}</option>
+                          <option key={cat} value={cat}>{cat}</option>
                         ))}
                       </select>
                     </div>
 
-                    <div className="border border-[var(--border-color)] rounded-xl overflow-hidden">
-                      <table className="w-full text-left text-sm">
-                        <thead className="bg-gray-50 dark:bg-slate-900/50 text-[var(--text-muted)] font-bold uppercase tracking-wider text-[10px]">
+                    <div className="bg-[var(--background)] rounded-[24px] overflow-hidden border-2 border-[var(--border-color)] shadow-sm">
+                      <table className="w-full text-left text-sm border-collapse">
+                        <thead className="bg-slate-500/5 text-[var(--text-muted)] font-black uppercase tracking-[0.2em] text-[10px] border-b-2 border-[var(--border-color)]">
                           <tr>
-                            <th className="px-6 py-3">Element Name</th>
-                            <th className="px-6 py-3">ID</th>
-                            <th className="px-6 py-3 text-right">Actions</th>
+                            <th className="px-8 py-5">Entry Name</th>
+                            <th className="px-8 py-5">Unique Identifier</th>
+                            <th className="px-8 py-5 text-right">Operations</th>
                           </tr>
                         </thead>
-                        <tbody className="divide-y divide-[var(--border-color)]">
+                        <tbody className="divide-y-2 divide-[var(--border-color)]">
                           {filteredManageElements.length > 0 ? (
                             filteredManageElements.map((el) => (
-                              <tr key={el.id} className="hover:bg-orange-50/20 dark:hover:bg-slate-700/50 transition-colors group">
-                                <td className="px-6 py-4 font-bold text-[var(--foreground)]">{el.name}</td>
-                                <td className="px-6 py-4 font-mono text-xs text-[var(--text-muted)]">{el.id}</td>
-                                <td className="px-6 py-4 text-right flex items-center justify-end gap-2">
+                              <tr key={el.id} className="hover:bg-orange-500/5 transition-all group">
+                                <td className="px-8 py-5 font-black text-[var(--foreground)] text-base tracking-tight">{el.name}</td>
+                                <td className="px-8 py-5 font-mono text-xs text-[var(--text-muted)] font-bold opacity-60 group-hover:opacity-100 transition-opacity">{el.id}</td>
+                                <td className="px-8 py-5 text-right flex items-center justify-end gap-3">
                                   <button 
                                     onClick={() => startEditing(el)}
-                                    className="p-2 text-[var(--text-muted)] hover:text-orange-600 dark:hover:text-orange-400 hover:bg-orange-100/50 dark:hover:bg-orange-900/20 rounded-lg transition-all cursor-pointer"
+                                    className="p-3 text-[var(--text-muted)] hover:text-white hover:bg-orange-500 rounded-xl transition-all cursor-pointer shadow-sm hover:shadow-orange-500/30"
                                     title="Edit Element"
                                   >
-                                    <Edit2 size={16} />
+                                    <Edit2 size={18} strokeWidth={2.5} />
                                   </button>
                                   <button 
                                     onClick={() => {
-                                      if (confirm(`Are you sure you want to remove "${el.name}"?`)) {
+                                      if (confirm(`Irreversible Action: Are you sure you want to delete "${el.name}"?`)) {
                                         handleDeleteElement(activeManageCategory, el.id);
                                       }
                                     }}
-                                    className="p-2 text-[var(--text-muted)] hover:text-red-600 dark:hover:text-red-400 hover:bg-red-100/50 dark:hover:bg-red-900/20 rounded-lg transition-all cursor-pointer"
+                                    className="p-3 text-[var(--text-muted)] hover:text-white hover:bg-red-500 rounded-xl transition-all cursor-pointer shadow-sm hover:shadow-red-500/30"
                                     title="Remove Element"
                                   >
-                                    <X size={16} />
+                                    <X size={18} strokeWidth={2.5} />
                                   </button>
                                 </td>
                               </tr>
                             ))
                           ) : (
                             <tr>
-                              <td colSpan={3} className="px-6 py-10 text-center text-[var(--text-muted)]">
-                                No elements found in this category.
+                              <td colSpan={3} className="px-8 py-20 text-center">
+                                <p className="text-[var(--text-muted)] font-black text-lg opacity-40">DATABASE EMPTY IN THIS CATEGORY</p>
                               </td>
                             </tr>
                           )}
