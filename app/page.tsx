@@ -27,7 +27,8 @@ export default function Home() {
 
   const filteredElements = useMemo(() => {
     if (!docs) return [];
-    const elements = (docs[activeCategory] as SkElement[]) || [];
+    const elements = ((docs[activeCategory] as SkElement[]) || [])
+      .sort((a, b) => (a.id || "").localeCompare(b.id || ""));
     if (!searchQuery) return elements;
 
     const query = searchQuery.toLowerCase();
@@ -53,7 +54,10 @@ export default function Home() {
             </div>
             <div>
               <h1 className="text-xl font-bold text-[var(--foreground)] tracking-tight">SkBee Docs</h1>
-              {docs && <p className="text-[10px] font-bold text-orange-500 uppercase tracking-widest">v{docs.metadata.version}</p>}
+              <div className="flex items-center gap-2">
+                {docs && <p className="text-[10px] font-bold text-orange-500 uppercase tracking-widest">v{docs.metadata.version}</p>}
+                <span className="text-[8px] text-[var(--text-muted)] opacity-50">Build: 2026-05-22-20-38</span>
+              </div>
             </div>
           </div>
 
