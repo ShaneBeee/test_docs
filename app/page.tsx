@@ -11,7 +11,7 @@ import { cn } from "@/lib/utils";
 
 export default function Home() {
   const [docs, setDocs] = useState<SkDocs | null>(null);
-  const [activeCategory, setActiveCategory] = useState<SkCategory>("effects");
+  const [activeCategory, setActiveCategory] = useState<SkCategory>("types");
   const [searchQuery, setSearchQuery] = useState("");
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isAdminOpen, setIsAdminOpen] = useState(false);
@@ -57,7 +57,7 @@ export default function Home() {
               <h1 className="text-xl font-bold text-[var(--foreground)] tracking-tight">SkBee Docs</h1>
               <div className="flex items-center gap-2">
                 {docs && <p className="text-[10px] font-bold text-orange-500 uppercase tracking-widest">v{docs.metadata.version}</p>}
-                <span className="text-[8px] text-[var(--text-muted)] opacity-50">Build: 2026-05-22-20-42</span>
+                <span className="text-[8px] text-[var(--text-muted)] opacity-50">Build: 2026-05-22-20-53</span>
               </div>
             </div>
           </div>
@@ -75,7 +75,7 @@ export default function Home() {
                   }
                 }}
                 className={cn(
-                  "w-full flex items-center justify-between px-4 py-3 rounded-xl text-sm font-semibold transition-all group",
+                  "w-full flex items-center justify-between px-4 py-3 rounded-xl text-sm font-semibold transition-all group cursor-pointer",
                   activeCategory === cat
                     ? "bg-orange-50 dark:bg-orange-900/20 text-orange-600 dark:text-orange-400 shadow-sm"
                     : "text-[var(--text-muted)] hover:bg-orange-50/30 dark:hover:bg-slate-700/50 hover:text-orange-600 dark:hover:text-[var(--foreground)]"
@@ -91,16 +91,16 @@ export default function Home() {
           </nav>
 
           <div className="mt-6 pt-6 border-t border-[var(--border-color)] space-y-1">
-            <button
-              onClick={toggleTheme}
-              className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold text-[var(--text-muted)] hover:bg-orange-50/30 dark:hover:bg-slate-700/50 hover:text-orange-600 dark:hover:text-[var(--foreground)] transition-all"
-            >
+              <button
+                onClick={toggleTheme}
+                className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold text-[var(--text-muted)] hover:bg-orange-50/30 dark:hover:bg-slate-700/50 hover:text-orange-600 dark:hover:text-[var(--foreground)] transition-all cursor-pointer"
+              >
               {theme === "light" ? <Sun size={18} /> : <Moon size={18} />}
               {theme === "light" ? "Light Mode" : "Dark Mode"}
             </button>
             <button
               onClick={() => setIsAdminOpen(true)}
-              className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold text-[var(--text-muted)] hover:bg-orange-50/30 dark:hover:bg-slate-700/50 hover:text-orange-600 dark:hover:text-[var(--foreground)] transition-all"
+              className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold text-[var(--text-muted)] hover:bg-orange-50/30 dark:hover:bg-slate-700/50 hover:text-orange-600 dark:hover:text-[var(--foreground)] transition-all cursor-pointer"
             >
               <Settings size={18} />
               Admin Settings
@@ -115,7 +115,7 @@ export default function Home() {
         <header className="bg-[var(--header-bg)] backdrop-blur-md border-b border-[var(--border-color)] px-4 md:px-8 py-4 sticky top-0 z-30">
           <div className="max-w-5xl mx-auto flex items-center gap-4">
             <button
-              className="md:hidden text-[var(--text-muted)] hover:text-[var(--foreground)] p-1"
+              className="md:hidden text-[var(--text-muted)] hover:text-[var(--foreground)] p-1 cursor-pointer"
               onClick={() => setIsSidebarOpen(true)}
             >
               <Menu size={24} />
@@ -150,7 +150,7 @@ export default function Home() {
                 </div>
                 <button
                   onClick={() => setIsAdminOpen(true)}
-                  className="bg-orange-600 text-white px-8 py-3 rounded-xl font-bold shadow-lg shadow-orange-200 dark:shadow-none hover:bg-orange-700 transition-all"
+                  className="bg-orange-600 text-white px-8 py-3 rounded-xl font-bold shadow-lg shadow-orange-200 dark:shadow-none hover:bg-orange-700 transition-all cursor-pointer"
                 >
                   Go to Admin Settings
                 </button>

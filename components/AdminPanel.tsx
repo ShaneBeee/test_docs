@@ -187,7 +187,7 @@ export default function AdminPanel({ onClose, onUploadSuccess }: { onClose: () =
                   )}
                   <button
                     type="submit"
-                    className="w-full bg-orange-600 hover:bg-orange-700 text-white font-bold py-3 rounded-xl shadow-lg shadow-orange-200 dark:shadow-none transition-all active:scale-[0.98]"
+                    className="w-full bg-orange-600 hover:bg-orange-700 text-white font-bold py-3 rounded-xl shadow-lg shadow-orange-200 dark:shadow-none transition-all active:scale-[0.98] cursor-pointer"
                   >
                     Login
                   </button>
@@ -203,7 +203,7 @@ export default function AdminPanel({ onClose, onUploadSuccess }: { onClose: () =
                     <button 
                       onClick={() => setView("upload")}
                       className={cn(
-                        "pb-4 text-sm font-bold transition-all border-b-2",
+                        "pb-4 px-4 text-sm font-bold transition-all border-b-2 cursor-pointer",
                         view === "upload" ? "text-orange-600 border-orange-600" : "text-[var(--text-muted)] border-transparent hover:text-orange-600 hover:bg-orange-50/30 rounded-t-lg transition-all"
                       )}
                     >
@@ -212,7 +212,7 @@ export default function AdminPanel({ onClose, onUploadSuccess }: { onClose: () =
                     <button 
                       onClick={() => setView("manage")}
                       className={cn(
-                        "pb-4 text-sm font-bold transition-all border-b-2",
+                        "pb-4 px-4 text-sm font-bold transition-all border-b-2 cursor-pointer",
                         view === "manage" ? "text-orange-600 border-orange-600" : "text-[var(--text-muted)] border-transparent hover:text-orange-600 hover:bg-orange-50/30 rounded-t-lg transition-all"
                       )}
                     >
@@ -229,7 +229,7 @@ export default function AdminPanel({ onClose, onUploadSuccess }: { onClose: () =
                     <div className="flex items-center justify-between mb-4">
                       <button 
                         onClick={() => setEditingElement(null)}
-                        className="flex items-center gap-2 text-[var(--text-muted)] hover:text-[var(--foreground)] font-medium transition-colors"
+                        className="flex items-center gap-2 text-[var(--text-muted)] hover:text-[var(--foreground)] font-medium transition-colors cursor-pointer"
                       >
                         <ArrowLeft size={18} />
                         Back to List
@@ -292,7 +292,7 @@ export default function AdminPanel({ onClose, onUploadSuccess }: { onClose: () =
                       <div className="pt-4">
                         <button 
                           onClick={handleSaveEdit}
-                          className="w-full bg-orange-600 hover:bg-orange-700 text-white font-bold py-3 rounded-xl shadow-lg shadow-orange-200 dark:shadow-none transition-all flex items-center justify-center gap-2"
+                          className="w-full bg-orange-600 hover:bg-orange-700 text-white font-bold py-3 rounded-xl shadow-lg shadow-orange-200 dark:shadow-none transition-all flex items-center justify-center gap-2 cursor-pointer"
                         >
                           <Save size={18} />
                           Save Changes
@@ -385,7 +385,7 @@ export default function AdminPanel({ onClose, onUploadSuccess }: { onClose: () =
                                 <td className="px-6 py-4 text-right flex items-center justify-end gap-2">
                                   <button 
                                     onClick={() => startEditing(el)}
-                                    className="p-2 text-[var(--text-muted)] hover:text-orange-600 dark:hover:text-orange-400 hover:bg-orange-100/50 dark:hover:bg-orange-900/20 rounded-lg transition-all"
+                                    className="p-2 text-[var(--text-muted)] hover:text-orange-600 dark:hover:text-orange-400 hover:bg-orange-100/50 dark:hover:bg-orange-900/20 rounded-lg transition-all cursor-pointer"
                                     title="Edit Element"
                                   >
                                     <Edit2 size={16} />
@@ -396,7 +396,7 @@ export default function AdminPanel({ onClose, onUploadSuccess }: { onClose: () =
                                         handleDeleteElement(activeManageCategory, el.id);
                                       }
                                     }}
-                                    className="p-2 text-[var(--text-muted)] hover:text-red-600 dark:hover:text-red-400 hover:bg-red-100/50 dark:hover:bg-red-900/20 rounded-lg transition-all"
+                                    className="p-2 text-[var(--text-muted)] hover:text-red-600 dark:hover:text-red-400 hover:bg-red-100/50 dark:hover:bg-red-900/20 rounded-lg transition-all cursor-pointer"
                                     title="Remove Element"
                                   >
                                     <X size={16} />

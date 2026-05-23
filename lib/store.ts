@@ -24,12 +24,12 @@ export function clearDocs() {
 }
 
 export const CATEGORIES = [
+  "types",
   "structures",
   "events",
-  "types",
+  "sections",
+  "effects",
   "expressions",
   "conditions",
-  "effects",
   "functions",
-  "sections",
 ] as const;
