@@ -3,9 +3,10 @@
 import { useState, useEffect, useMemo } from "react";
 import { CATEGORIES, getDocs } from "@/lib/store";
 import { SkCategory, SkDocs, SkElement } from "@/lib/types";
-import { Search, Menu, X, Settings, BookOpen, ChevronRight } from "lucide-react";
+import { Search, Menu, X, Settings, BookOpen, ChevronRight, Sun, Moon } from "lucide-react";
 import ElementCard from "@/components/ElementCard";
 import AdminPanel from "@/components/AdminPanel";
+import { useTheme } from "@/components/ThemeProvider";
 import { cn } from "@/lib/utils";
 
 export default function Home() {
@@ -14,6 +15,7 @@ export default function Home() {
   const [searchQuery, setSearchQuery] = useState("");
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isAdminOpen, setIsAdminOpen] = useState(false);
+  const { theme, toggleTheme } = useTheme();
 
   useEffect(() => {
     setDocs(getDocs());
@@ -38,25 +40,25 @@ export default function Home() {
   }, [docs, activeCategory, searchQuery]);
 
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col md:flex-row">
+    <div className="min-h-screen flex flex-col md:flex-row transition-colors duration-300">
       {/* Sidebar */}
       <aside className={cn(
-        "fixed inset-y-0 left-0 z-40 w-72 bg-white border-r border-gray-100 transform transition-transform duration-300 ease-in-out md:relative md:translate-x-0",
+        "fixed inset-y-0 left-0 z-40 w-72 bg-[var(--sidebar-bg)] border-r border-[var(--border-color)] transform transition-transform duration-300 ease-in-out md:relative md:translate-x-0",
         isSidebarOpen ? "translate-x-0" : "-translate-x-full"
       )}>
         <div className="h-full flex flex-col p-6">
           <div className="flex items-center gap-3 mb-10">
-            <div className="w-10 h-10 bg-gradient-to-br from-orange-400 to-orange-600 rounded-xl flex items-center justify-center shadow-lg shadow-orange-200">
+            <div className="w-10 h-10 bg-gradient-to-br from-orange-400 to-orange-600 rounded-xl flex items-center justify-center shadow-lg shadow-orange-200 dark:shadow-none">
               <BookOpen className="text-white" size={24} />
             </div>
             <div>
-              <h1 className="text-xl font-bold text-gray-900 tracking-tight">SkBee Docs</h1>
+              <h1 className="text-xl font-bold text-[var(--foreground)] tracking-tight">SkBee Docs</h1>
               {docs && <p className="text-[10px] font-bold text-orange-500 uppercase tracking-widest">v{docs.metadata.version}</p>}
             </div>
           </div>
 
           <nav className="flex-1 space-y-1 overflow-y-auto pr-2">
-            <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-4 px-3">Categories</p>
+            <p className="text-[10px] font-bold text-[var(--text-muted)] uppercase tracking-widest mb-4 px-3">Categories</p>
             {CATEGORIES.map((cat) => (
               <button
                 key={cat}
@@ -67,8 +69,8 @@ export default function Home() {
                 className={cn(
                   "w-full flex items-center justify-between px-4 py-3 rounded-xl text-sm font-semibold transition-all group",
                   activeCategory === cat
-                    ? "bg-orange-50 text-orange-600 shadow-sm"
-                    : "text-gray-500 hover:bg-gray-50 hover:text-gray-900"
+                    ? "bg-orange-50 dark:bg-orange-900/20 text-orange-600 dark:text-orange-400 shadow-sm"
+                    : "text-[var(--text-muted)] hover:bg-orange-50/30 dark:hover:bg-slate-700/50 hover:text-orange-600 dark:hover:text-[var(--foreground)]"
                 )}
               >
                 <span className="capitalize">{cat}</span>
@@ -80,10 +82,17 @@ export default function Home() {
             ))}
           </nav>
 
-          <div className="mt-6 pt-6 border-t border-gray-100">
+          <div className="mt-6 pt-6 border-t border-[var(--border-color)] space-y-1">
+            <button
+              onClick={toggleTheme}
+              className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold text-[var(--text-muted)] hover:bg-orange-50/30 dark:hover:bg-slate-700/50 hover:text-orange-600 dark:hover:text-[var(--foreground)] transition-all"
+            >
+              {theme === "light" ? <Sun size={18} /> : <Moon size={18} />}
+              {theme === "light" ? "Light Mode" : "Dark Mode"}
+            </button>
             <button
               onClick={() => setIsAdminOpen(true)}
-              className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold text-gray-500 hover:bg-gray-50 hover:text-gray-900 transition-all"
+              className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold text-[var(--text-muted)] hover:bg-orange-50/30 dark:hover:bg-slate-700/50 hover:text-orange-600 dark:hover:text-[var(--foreground)] transition-all"
             >
               <Settings size={18} />
               Admin Settings
@@ -95,23 +104,23 @@ export default function Home() {
       {/* Main Content */}
       <main className="flex-1 flex flex-col min-w-0 h-screen overflow-hidden">
         {/* Header */}
-        <header className="bg-white/80 backdrop-blur-md border-b border-gray-100 px-4 md:px-8 py-4 sticky top-0 z-30">
+        <header className="bg-[var(--header-bg)] backdrop-blur-md border-b border-[var(--border-color)] px-4 md:px-8 py-4 sticky top-0 z-30">
           <div className="max-w-5xl mx-auto flex items-center gap-4">
             <button
-              className="md:hidden text-gray-500 hover:text-gray-900 p-1"
+              className="md:hidden text-[var(--text-muted)] hover:text-[var(--foreground)] p-1"
               onClick={() => setIsSidebarOpen(true)}
             >
               <Menu size={24} />
             </button>
 
             <div className="relative flex-1">
-              <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
+              <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-[var(--text-muted)]" size={18} />
               <input
                 type="text"
                 placeholder={`Search ${activeCategory}...`}
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-12 pr-4 py-3 bg-white border border-gray-200 text-gray-900 focus:border-orange-500 focus:ring-4 focus:ring-orange-100 rounded-2xl outline-none transition-all text-sm font-medium shadow-sm"
+                className="w-full pl-12 pr-4 py-3 bg-[var(--card-bg)] border border-[var(--border-color)] text-[var(--foreground)] focus:border-orange-500 dark:focus:border-orange-500 focus:ring-4 focus:ring-orange-100 dark:focus:ring-orange-900/20 rounded-2xl outline-none transition-all text-sm font-medium shadow-sm"
               />
             </div>
           </div>
@@ -122,18 +131,18 @@ export default function Home() {
           <div className="max-w-5xl mx-auto">
             {!docs ? (
               <div className="flex flex-col items-center justify-center h-[60vh] text-center space-y-6">
-                <div className="w-24 h-24 bg-orange-50 rounded-full flex items-center justify-center">
-                  <BookOpen className="text-orange-200" size={48} />
+                <div className="w-24 h-24 bg-orange-50 dark:bg-orange-900/20 rounded-full flex items-center justify-center">
+                  <BookOpen className="text-orange-200 dark:text-orange-900/40" size={48} />
                 </div>
                 <div>
-                  <h2 className="text-2xl font-bold text-gray-900">No Documentation Found</h2>
-                  <p className="text-gray-500 max-w-sm mx-auto mt-2">
-                    Please login to the Admin Panel and upload your <code className="text-orange-600 bg-orange-50 px-1 rounded">json-docs.json</code> file to get started.
+                  <h2 className="text-2xl font-bold text-gray-900 dark:text-white">No Documentation Found</h2>
+                  <p className="text-gray-500 dark:text-slate-400 max-w-sm mx-auto mt-2">
+                    Please login to the Admin Panel and upload your <code className="text-orange-600 dark:text-orange-400 bg-orange-50 dark:bg-orange-900/20 px-1 rounded">json-docs.json</code> file to get started.
                   </p>
                 </div>
                 <button
                   onClick={() => setIsAdminOpen(true)}
-                  className="bg-orange-600 text-white px-8 py-3 rounded-xl font-bold shadow-lg shadow-orange-200 hover:bg-orange-700 transition-all"
+                  className="bg-orange-600 text-white px-8 py-3 rounded-xl font-bold shadow-lg shadow-orange-200 dark:shadow-none hover:bg-orange-700 transition-all"
                 >
                   Go to Admin Settings
                 </button>
@@ -142,8 +151,8 @@ export default function Home() {
               <div className="space-y-8">
                 <div className="flex items-center justify-between">
                   <div>
-                    <h2 className="text-3xl font-extrabold text-gray-900 capitalize tracking-tight">{activeCategory}</h2>
-                    <p className="text-gray-500 mt-1">Showing {filteredElements.length} elements</p>
+                    <h2 className="text-3xl font-extrabold text-[var(--foreground)] capitalize tracking-tight">{activeCategory}</h2>
+                    <p className="text-[var(--text-muted)] mt-1">Showing {filteredElements.length} elements</p>
                   </div>
                 </div>
 
@@ -154,8 +163,8 @@ export default function Home() {
                     ))}
                   </div>
                 ) : (
-                  <div className="bg-white rounded-2xl p-12 text-center border border-dashed border-gray-200">
-                    <p className="text-gray-400 font-medium">No elements match your search criteria.</p>
+                  <div className="bg-[var(--card-bg)] rounded-2xl p-12 text-center border border-dashed border-[var(--border-color)]">
+                    <p className="text-[var(--text-muted)] font-medium">No elements match your search criteria.</p>
                   </div>
                 )}
               </div>
