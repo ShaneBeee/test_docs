@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo, useRef } from "react";
 import { CATEGORIES, getDocs } from "@/lib/store";
 import { SkCategory, SkDocs, SkElement } from "@/lib/types";
 import { Search, Menu, X, Settings, BookOpen, ChevronRight, Sun, Moon } from "lucide-react";
@@ -16,6 +16,7 @@ export default function Home() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isAdminOpen, setIsAdminOpen] = useState(false);
   const { theme, toggleTheme } = useTheme();
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     setDocs(getDocs());
@@ -56,7 +57,7 @@ export default function Home() {
               <h1 className="text-xl font-bold text-[var(--foreground)] tracking-tight">SkBee Docs</h1>
               <div className="flex items-center gap-2">
                 {docs && <p className="text-[10px] font-bold text-orange-500 uppercase tracking-widest">v{docs.metadata.version}</p>}
-                <span className="text-[8px] text-[var(--text-muted)] opacity-50">Build: 2026-05-22-20-38</span>
+                <span className="text-[8px] text-[var(--text-muted)] opacity-50">Build: 2026-05-22-20-42</span>
               </div>
             </div>
           </div>
@@ -69,6 +70,9 @@ export default function Home() {
                 onClick={() => {
                   setActiveCategory(cat);
                   setIsSidebarOpen(false);
+                  if (scrollContainerRef.current) {
+                    scrollContainerRef.current.scrollTo({ top: 0, behavior: 'smooth' });
+                  }
                 }}
                 className={cn(
                   "w-full flex items-center justify-between px-4 py-3 rounded-xl text-sm font-semibold transition-all group",
@@ -131,7 +135,7 @@ export default function Home() {
         </header>
 
         {/* Content Area */}
-        <div className="flex-1 overflow-y-auto p-4 md:p-8">
+        <div ref={scrollContainerRef} className="flex-1 overflow-y-auto p-4 md:p-8">
           <div className="max-w-5xl mx-auto">
             {!docs ? (
               <div className="flex flex-col items-center justify-center h-[60vh] text-center space-y-6">
